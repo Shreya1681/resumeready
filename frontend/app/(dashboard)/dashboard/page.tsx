@@ -49,8 +49,10 @@ export default function DashboardPage() {
 
   const loadDashboardData = async (userId: string) => {
     try {
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+      
       // 1. Load active resume
-      const resumeRes = await fetch(`http://localhost:5000/api/resume/active?userId=${userId}`)
+      const resumeRes = await fetch(`${apiBase}/api/resume/active?userId=${userId}`)
       if (resumeRes.ok) {
         const resumeData = await resumeRes.json()
         setResume(resumeData)
@@ -63,7 +65,7 @@ export default function DashboardPage() {
       }
 
       // 2. Load interview history
-      const historyRes = await fetch(`http://localhost:5000/api/interview/history?userId=${userId}`)
+      const historyRes = await fetch(`${apiBase}/api/interview/history?userId=${userId}`)
       if (historyRes.ok) {
         const historyData = await historyRes.json()
         setInterviews(historyData)

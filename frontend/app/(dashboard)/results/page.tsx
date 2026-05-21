@@ -73,9 +73,11 @@ export default function ResultsPage() {
   const [selectedResult, setSelectedResult] = useState<InterviewResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
+  const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+
   const fetchHistory = async (userId: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/interview/history?userId=${userId}`)
+      const res = await fetch(`${apiBase}/api/interview/history?userId=${userId}`)
       if (!res.ok) throw new Error("Failed to fetch interview history")
       const data = await res.json()
       setHistory(data)
@@ -123,7 +125,7 @@ export default function ResultsPage() {
           toast.info("New interview transcript found! Evaluating with Gemini AI...")
           
           // Trigger evaluation
-          const evalRes = await fetch("http://localhost:5000/api/interview/feedback", {
+          const evalRes = await fetch(`${apiBase}/api/interview/feedback`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

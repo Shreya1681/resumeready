@@ -116,8 +116,10 @@ export default function UploadPage() {
       // Extract text from PDF (mock for demo)
       const resumeText = await extractTextFromPDF(file)
       
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+      
       // Call AI analysis API with user ID
-      const response = await fetch('http://localhost:5000/api/resume/analyze', {
+      const response = await fetch(`${apiBase}/api/resume/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resumeText, userId: session?.user?.id })

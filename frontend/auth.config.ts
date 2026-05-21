@@ -15,7 +15,8 @@ export default {
     async signIn({ user, account, profile }) {
       if (account?.provider === "google") {
         try {
-          const response = await fetch("http://localhost:5000/api/auth/google-login", {
+          const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+          const response = await fetch(`${apiBase}/api/auth/google-login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
